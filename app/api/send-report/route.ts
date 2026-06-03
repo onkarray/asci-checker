@@ -68,7 +68,7 @@ function buildEmailHtml(name: string, analysis: AnalysisResult): string {
   const compliantItems = compliantElements
     .map(el => `<li style="margin-bottom:6px;font-size:13px;color:#374151;">${el}</li>`).join('');
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://asci-checker.vercel.app';
 
   return `
 <!DOCTYPE html>
