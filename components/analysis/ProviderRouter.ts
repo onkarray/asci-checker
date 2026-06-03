@@ -76,7 +76,7 @@ async function callClaudeOnce(req: AnalysisRequest): Promise<Response> {
   }
   content.push({ type: 'text', text: req.userPrompt });
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  return fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
       'x-api-key': req.apiKey,
@@ -96,12 +96,10 @@ async function callClaudeOnce(req: AnalysisRequest): Promise<Response> {
 
 async function callClaude(req: AnalysisRequest): Promise<string> {
   const MAX_RETRIES = 3;
-  let lastErr = '';
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
     if (attempt > 0) await new Promise(r => setTimeout(r, attempt * 8000));
     const response = await callClaudeOnce(req);
     if (response.status === 529 || response.status === 503) {
-      lastErr = `Claude is overloaded (attempt ${attempt + 1}/${MAX_RETRIES}). Retrying...`;
       continue;
     }
     if (!response.ok) {
@@ -151,49 +149,6 @@ async function callOpenAI(req: AnalysisRequest): Promise<string> {
 
   const data = await response.json();
   return data.choices[0].message.content;
-}
-
-async function uploadVideoToGemini(
-  videoBase64: string,
-  mimeType: string,
-  apiKey: string
-): Promise<string> {
-  const videoBytes = Uint8Array.from(atob(videoBase64), c => c.charCodeAt(0));
-
-  const startResponse = await fetch(
-    `https://generativelanguage.googleapis.com/upload/v1beta/files?uploadType=resumable&key=${apiKey}`,
-    {
-      method: 'POST',
-      headers: {
-        'X-Goog-Upload-Protocol': 'resumable',
-        'X-Goog-Upload-Command': 'start',
-        'X-Goog-Upload-Header-Content-Length': String(videoBytes.length),
-        'X-Goog-Upload-Header-Content-Type': mimeType,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ file: { display_name: 'ad_video' } }),
-    }
-  );
-
-  if (!startResponse.ok) throw new Error(`Gemini upload start error: ${startResponse.status}`);
-
-  const uploadUrl = startResponse.headers.get('X-Goog-Upload-URL');
-  if (!uploadUrl) throw new Error('No upload URL from Gemini Files API');
-
-  const uploadResponse = await fetch(uploadUrl, {
-    method: 'POST',
-    headers: {
-      'X-Goog-Upload-Command': 'upload, finalize',
-      'X-Goog-Upload-Offset': '0',
-      'Content-Type': mimeType,
-    },
-    body: videoBytes,
-  });
-
-  if (!uploadResponse.ok) throw new Error(`Gemini video upload error: ${uploadResponse.status}`);
-
-  const fileData = await uploadResponse.json();
-  return fileData.file.uri;
 }
 
 const GEMINI_FALLBACK = 'gemini-1.5-flash';

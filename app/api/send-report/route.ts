@@ -20,7 +20,7 @@ function buildEmailHtml(name: string, analysis: AnalysisResult): string {
   const severityBorder = (s: string) =>
     s === 'HIGH' ? '#fecaca' : s === 'MEDIUM' ? '#fde68a' : '#e5e7eb';
 
-  const violationCards = violations.map((v, i) => `
+  const violationCards = violations.map((v) => `
     <div style="margin-bottom:16px;border:1px solid ${severityBorder(v.severity)};border-left:4px solid ${severityColor(v.severity)};border-radius:6px;background:${severityBg(v.severity)};padding:16px;">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
         <span style="background:${severityColor(v.severity)};color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;">${v.severity}</span>
