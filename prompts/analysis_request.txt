@@ -1,0 +1,88 @@
+Analyze the following advertisement for ASCI compliance.
+
+AD DETAILS:
+- Format: {{format}}
+  (TEXT | IMAGE | CAROUSEL_[n]_IMAGES | VIDEO_TRANSCRIPT_WITH_FRAMES)
+- Primary sector: {{sector}}
+  (personal_care | healthcare | food_beverage | education | real_estate |
+   finance | crypto | fashion | automotive | general)
+- Content type: {{content_type}}
+  (brand_ad | influencer_post | brand_ad_with_influencer)
+- Platform: {{platform}}
+  (instagram | youtube | facebook | linkedin | twitter | tv | print |
+   outdoor | website | other)
+
+{{#if carousel}}
+CAROUSEL NOTE: Analyze each frame individually AND check for cross-frame
+consistency. A claim made in frame 1 must be substantiated by frame 3
+if that's where the evidence appears. Misleading sequencing is itself
+a violation.
+{{/if}}
+
+{{#if video}}
+VIDEO NOTE: Transcript contains spoken content. Frame descriptions contain
+visual content at key moments. Analyze both together. Pay specific attention to:
+- Disclosure label presence and timing in first 3 seconds
+- Any on-screen text claims not spoken aloud
+- Before/after visual sequences
+- Disclaimer text at end — check if readable and held long enough
+- Credential display if health/finance advice is given
+{{/if}}
+
+AD CONTENT:
+{{content}}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Return your analysis as this exact JSON structure. No markdown, no explanation
+outside the JSON:
+
+{
+  "overall_score": <0-100>,
+  "verdict": <"COMPLIANT" | "NEEDS_REVISION" | "NON_COMPLIANT" | "AUTO_FAIL">,
+  "auto_fail_reason": <string describing the illegal/prohibited category, or null>,
+  "escalation_required": <true | false>,
+  "escalation_body": <"MIB" | "AYUSH" | "RBI" | "SEBI" | "MahaRERA" | "DoCA" | null>,
+
+  "category_scores": {
+    "claim_substantiation": <0-25>,
+    "disclosure_compliance": <0-25>,
+    "prohibited_category_check": <0-20>,
+    "sector_specific": <0-20>,
+    "language_and_framing": <0-10>
+  },
+
+  "violations": [
+    {
+      "id": <"V1" | "V2" | ...>,
+      "module": <"CLAIM_SUBSTANTIATION" | "HARMFUL_CONTENT" | "PROHIBITED_CATEGORY" |
+                 "DISCLOSURE" | "SECTOR_SPECIFIC" | "DISCLAIMER" | "COMPARATIVE" | "DECEPTIVE_PRACTICES">,
+      "rule_reference": <e.g. "Rule 1.1" | "Rule I-1.2" | "Addendum 2 — Health">,
+      "severity": <"HIGH" | "MEDIUM" | "LOW">,
+      "offending_element": <exact quoted text OR precise visual description>,
+      "why_its_a_violation": <1-2 sentences explaining how ASCI applies this rule in practice>,
+      "fix_suggestion": <specific, actionable fix — what to add, remove, or change>
+    }
+  ],
+
+  "compliant_elements": [<list of specific things the ad got right>],
+
+  "teaser_summary": <2 sentences max. Score + top issue. Plain English.
+                     Shown to user BEFORE email capture. No fix details.>,
+
+  "full_summary": <3-4 sentences. Overall assessment + top 2-3 issues +
+                   one positive. Shown AFTER email capture. Plain English.>
+}
+
+Severity guide:
+HIGH   → ASCI would uphold a complaint. Must fix before publishing.
+MEDIUM → Borderline. Strengthen with evidence or rephrase. Risk if a
+          competitor or consumer files a complaint.
+LOW    → Best practice gap. Not a clear violation but could be flagged
+          in a proactive ASCI sweep.
+
+Score thresholds:
+80-100 = COMPLIANT
+60-79  = NEEDS_REVISION
+0-59   = NON_COMPLIANT
+AUTO_FAIL = Prohibited category regardless of score

@@ -1,0 +1,21 @@
+This is a secondary call made AFTER the compliance analysis.
+Extract ONLY the metadata fields below from the analysis result.
+This data is stored on our servers for lead follow-up.
+The actual ad content is NEVER sent to or stored on our servers.
+
+From the compliance analysis JSON, extract:
+
+{
+  "ad_category": <sector value>,
+  "ad_format": <format value>,
+  "platform": <platform value>,
+  "overall_score": <number>,
+  "verdict": <verdict value>,
+  "auto_fail": <true | false>,
+  "escalation_required": <true | false>,
+  "violation_modules": [<list of unique module values from violations array>],
+  "high_severity_count": <count of HIGH violations>,
+  "medium_severity_count": <count of MEDIUM violations>,
+  "low_severity_count": <count of LOW violations>,
+  "top_violation_rule": <rule_reference of first HIGH violation, or first MEDIUM if no HIGH>
+}

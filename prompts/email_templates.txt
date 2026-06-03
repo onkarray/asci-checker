@@ -1,0 +1,66 @@
+Map violation_modules to outreach angle for personalized follow-up emails.
+Use the lead's ad_category, overall_score, and violation_modules to pick the right angle.
+
+---
+
+DISCLOSURE violations:
+Subject: "Your {{ad_category}} ad scored {{score}}/100 — disclosure placement is now a CCPA enforcement priority"
+Body angle: Disclosure placement is the #1 CCPA enforcement area for influencer campaigns right now.
+76% of India's top 100 digital creators violated this in ASCI's latest study.
+We can help you build a disclosure checklist your whole team uses before every post.
+
+---
+
+CLAIM_SUBSTANTIATION violations:
+Subject: "{{score}}/100 — {{count}} claims in your ad flagged as unsubstantiated"
+Body angle: One complaint to ASCI is enough to pause a live campaign.
+Unsubstantiated claims are the #1 reason ads get modified or withdrawn.
+We can help you identify which claims need evidence and how to reframe the ones that don't have it.
+
+---
+
+SECTOR_SPECIFIC + healthcare:
+Subject: "Your health ad scored {{score}}/100 — DMR Act violations go straight to Ministry of Ayush"
+Body angle: 81% of healthcare ad violations involve the Drugs & Magic Remedies Act.
+These are escalated directly to the Ministry of Ayush, not just flagged by ASCI.
+We can help you reframe health claims to be both compelling and compliant.
+
+---
+
+SECTOR_SPECIFIC + green_claims:
+Subject: "Your ad scored {{score}}/100 — ASCI flagged 100% of green claim ads last year"
+Body angle: Every single green claim ad reviewed by ASCI in 2024-25 required modification.
+Zero passed without changes. "Eco-friendly", "sustainable", "natural" all need substantiation.
+We can help you make your green positioning credible and audit-proof.
+
+---
+
+SECTOR_SPECIFIC + education:
+Subject: "Your edtech ad scored {{score}}/100 — placement guarantee claims are an auto-fail"
+Body angle: "100% placement" is an absolute claim ASCI has never upheld.
+EdTech is under increasing regulatory scrutiny for outcome promises.
+We can help you reframe your results story compliantly without losing the impact.
+
+---
+
+SECTOR_SPECIFIC + real_estate:
+Subject: "Your real estate ad scored {{score}}/100 — MahaRERA compliance is now enforced with fines"
+Body angle: ASCI reported 1,755 Maharashtra real estate ads to MahaRERA last year.
+The regulator imposed fines on builders based on ASCI's findings.
+Missing registration numbers and QR codes are the most common and easiest to fix.
+
+---
+
+AUTO_FAIL:
+Subject: "Your ad was flagged in a prohibited category — escalated to {{escalation_body}}"
+Body angle: This isn't just an ASCI issue — prohibited category ads are reported directly
+to government regulators including {{escalation_body}}.
+We can help you understand what crossed the line and how to restructure the campaign.
+
+---
+
+COMPLIANT (score 80+):
+Subject: "Your ad scored {{score}}/100 — here's how to keep it that way"
+Body angle: Most brands only check compliance after a complaint is filed.
+You're ahead of 98% of advertisers who got flagged by ASCI last year.
+Here's a quick checklist to make sure your next campaign starts clean too.
