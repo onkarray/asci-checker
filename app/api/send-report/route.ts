@@ -151,7 +151,7 @@ export async function POST(request: NextRequest) {
     }`;
 
     const { error } = await resend.emails.send({
-      from: 'ASCI Checker <reports@resend.dev>',
+      from: 'ASCI Checker <reports@outoftheblue.ai>',
       to: email,
       subject,
       html: buildEmailHtml(name || 'there', analysis),
